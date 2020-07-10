@@ -1,3 +1,11 @@
+## Portfolio Project for Janson Bunce
+
+* Utilize front-end and React experience to create a visually engagine product
+* Create an easy to use, user friendly back-end administration UI to easily CRUD new portfolio entries.
+* Work with custom CSS and JS to create some minimal and engaging designs/animations
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
