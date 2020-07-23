@@ -40,7 +40,7 @@ const LowerNavItems = [
 ]
 
 const NavContainer = styled.div`
-    background-color: black;
+    background-color: red;
     height: 100vh;
     width: 60px;
     position: absolute;
