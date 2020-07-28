@@ -1,8 +1,7 @@
 import Head from 'next/head'
-import NavBar from '../components/NavBar/NavBar'
-const Home = () => (
-  <>
-  <NavBar/>
+import React from 'react'
+export default function Home() {
+  return (
     <div className="container">
       <Head>
         <title>Create Next App</title>
@@ -30,7 +29,7 @@ const Home = () => (
           </a>
 
           <a
-            href="https://github.com/zeit/next.js/tree/master/examples"
+            href="https://github.com/vercel/next.js/tree/master/examples"
             className="card"
           >
             <h3>Examples &rarr;</h3>
@@ -38,12 +37,12 @@ const Home = () => (
           </a>
 
           <a
-            href="https://zeit.co/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             className="card"
           >
             <h3>Deploy &rarr;</h3>
             <p>
-              Instantly deploy your Next.js site to a public URL with ZEIT Now.
+              Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
         </div>
@@ -51,11 +50,12 @@ const Home = () => (
 
       <footer>
         <a
-          href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
+          Powered by{' '}
+          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
         </a>
       </footer>
 
@@ -178,6 +178,10 @@ const Home = () => (
           line-height: 1.5;
         }
 
+        .logo {
+          height: 1em;
+        }
+
         @media (max-width: 600px) {
           .grid {
             width: 100%;
@@ -191,8 +195,9 @@ const Home = () => (
         body {
           padding: 0;
           margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
         }
 
         * {
@@ -200,7 +205,5 @@ const Home = () => (
         }
       `}</style>
     </div>
-  </>
-)
-
-export default Home
+  )
+}
