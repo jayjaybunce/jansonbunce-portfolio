@@ -1,0 +1,10 @@
+{
+    "alias": ["blink.bunce.io"],
+    "builds": [{ "src": "projects/web/package.json", "use": "@now/next" }],
+    "github": {
+        "autoAlias": false
+    },
+    "name": "blink",
+    "routes": [{ "src": "/(.*)", "dest": "/projects/web/$1" }],
+    "version": 2
+}

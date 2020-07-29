@@ -1,0 +1,7 @@
+*
+!packages/*
+!projects/*
+!.yarnrc
+!babel.config.js
+!package.json
+!yarn.lock

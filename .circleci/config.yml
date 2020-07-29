@@ -1,0 +1,136 @@
+version: 2.1
+
+defaults: &defaults
+    docker:
+        - image: circleci/node:lts
+
+master: &master
+    filters:
+        branches:
+            only: master
+
+jobs:
+    install:
+        <<: *defaults
+        steps:
+            - checkout
+            - restore_cache:
+                  name: Restore Yarn Package Cache
+                  keys:
+                      - yarn-packages-{{ checksum "yarn.lock" }}
+            - run: yarn --frozen-lockfile
+            - save_cache:
+                  name: Save Yarn Package Cache
+                  key: yarn-packages-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - persist_to_workspace:
+                  root: ~/
+                  paths:
+                      - project
+                      - .cache/Cypress
+    alias:
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                  at: ~/
+            - run: yarn --silent now --token=$NOW_TOKEN --prod --confirm
+    build:
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                  at: ~/
+            - setup_remote_docker:
+                  docker_layer_caching: true
+            - run: echo "SKIP_PREFLIGHT_CHECK=true" > ./projects/create-react-app/.env
+            - run: yarn build
+    danger:
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                  at: ~/
+            - run: yarn danger ci
+    deploy:
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                  at: ~/
+            - run: yarn --silent now --token=$NOW_TOKEN --confirm
+            - run: yarn --silent now --token=$NOW_TOKEN alias blink-$CIRCLE_SHA1.now.sh
+    lint:
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                  at: ~/
+            - run: yarn lint
+    release:
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                  at: ~/
+            - checkout
+            - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+            - run: git config --global user.email "jerrod@goindev.io"
+            - run: git config --global user.name "Jerrod"
+            - run: yarn release
+    test:
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                  at: ~/
+            - run:
+                  command: yarn test --ci --reporters=default --reporters=jest-junit --no-cache
+                  environment:
+                      JEST_JUNIT_OUTPUT: 'reports/jest/results.xml'
+            - store_test_results:
+                  path: reports
+    test-integration:
+        docker:
+            - image: cypress/browsers:node12.16.1-chrome80-ff73
+        steps:
+            - attach_workspace:
+                  at: ~/
+            - run: yarn
+            - run: CYPRESS_baseUrl=https://blink-$CIRCLE_SHA1.now.sh yarn cypress run
+
+workflows:
+    version: 2
+    build:
+        jobs:
+            # - build:
+            #       requires:
+            #           - install
+            - alias:
+                  context: BloodGulch
+                  <<: *master
+                  requires:
+                      - deploy
+                      - release
+            - danger:
+                  context: BloodGulch
+                  requires:
+                      - install
+            - deploy:
+                  context: BloodGulch
+                  requires:
+                      - install
+            - install
+            - lint:
+                  requires:
+                      - install
+            - release:
+                  context: BloodGulch
+                  <<: *master
+                  requires:
+                      #   - build
+                      - install
+                      - lint
+                      - test
+                      - test-integration
+            - test:
+                  requires:
+                      - install
+            - test-integration:
+                  context: BloodGulch
+                  requires:
+                      - deploy

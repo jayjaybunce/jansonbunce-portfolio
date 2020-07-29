@@ -1,0 +1,12 @@
+{
+    "command": {
+        "publish": {
+            "allowBranch": "master",
+            "ignoreChanges": ["*.md"],
+            "message": "chore(release): publish [skip ci]"
+        }
+    },
+    "npmClient": "yarn",
+    "useWorkspaces": true,
+    "version": "independent"
+}

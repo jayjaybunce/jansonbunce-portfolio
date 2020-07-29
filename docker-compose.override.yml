@@ -1,0 +1,20 @@
+version: '3.6'
+
+services:
+    create-react-app:
+        build:
+            target: dev
+        ports:
+            - '3000:3000'
+        volumes:
+            - ./packages:/blink/packages
+            - ./projects:/blink/projects
+
+    gatsby:
+        build:
+            target: dev
+        ports:
+            - '8000:8000'
+        volumes:
+            - ./packages:/blink/packages
+            - ./projects:/blink/projects
