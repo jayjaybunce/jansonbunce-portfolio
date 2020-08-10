@@ -5,23 +5,27 @@ const bcrypt = require('bcrypt')
 const SALT_ROUNDS = 6
 
 const userShema = new Schema({
-    email: {
-        required: true,
-        type: String,
+        email: {
+            required: true,
+            type: String,
+        },
+        firstName: {
+            required: true,
+            type: String,
+        },
+        lastName: {
+            required: true,
+            type: String,
+        },
+        password: {
+            required: true,
+            type: String,
+        },
     },
-    firstName: {
-        required: true,
-        type: String,
+    {
+        timestamps: true,
     },
-    lastName: {
-        required: true,
-        type: String,
-    },
-    password: {
-        required: true,
-        type: String,
-    },
-})
+)
 
 userShema.set('toJSON', {
     transform(doc, ret) {
