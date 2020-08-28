@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
@@ -13,6 +13,8 @@
     "@emotion/styled": "^10.0.27",
     "babel-plugin-styled-components": "1.11.1",
     "emotion-theming": "^10.0.27",
+    "jsonwebtoken": "8.5.1",
+    "mongoose": "5.9.29",
     "next": "9.4.4",
     "next-fonts": "^1.4.0",
     "react": "16.13.1",

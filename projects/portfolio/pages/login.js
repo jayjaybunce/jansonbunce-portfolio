@@ -16,11 +16,11 @@ const LoginPage = (props) => {
         event.preventDefault()
         const response = await login({
             password,
-            username
+            username,
         })
         console.log(response)
     }
-    function handleChange(e){
+    function handleChange(e) {
         const { value } = e.target
         e.target.name === 'username' ? setUsername(value) : setPassword(value)
     }
